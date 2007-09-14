@@ -1,7 +1,7 @@
-%define version 2.18.0
+%define version 2.20.0
 %define release %mkrel 1
 
-%define libgnomemm_version 2.6.0
+%define libgnomemm_version 2.14.0
 %define libgnomecanvasmm_version 2.6.0
 %define gconfmm_version 2.6.0
 %define gnomevfsmm_version 2.6.0
@@ -12,6 +12,7 @@
 %define api_version 2.6
 %define libname_orig	%mklibname gnomeuimm %{api_version}
 %define libname		%mklibname gnomeuimm %{api_version} %{major}
+%define develname %mklibname -d gnomeuimm %{api_version}
 
 Summary:	A C++ wrapper for GNOME UI library
 Name:		%{pkgname}%{api_version}
@@ -49,14 +50,15 @@ It is a subpackage of the gnomemm project, which provides C++ binding
 of various GNOME libraries.
 
 
-%package	-n %{libname}-devel
+%package	-n %develname
 Summary:	Development files for libgnomeui C++ wrapper
 Group:		Development/GNOME and GTK+
 Requires:	%{libname} = %{version}
 Provides:	%{name}-devel = %{version}-%{release}
 Provides:	%{pkgname}-devel = %{version}-%{release}
+Obsoletes: %mklibname -d gnomeuimm %api_version 1
 
-%description	-n %{libname}-devel
+%description	-n %develname
 This package contains all necessary files, including libraries and headers,
 that C++ programmers will need to develop applications which use
 %{pkgname}, the C++ interface to libgnomeui.
@@ -99,9 +101,9 @@ rm -rf %{buildroot}
 %files -n %{libname}
 %defattr(-, root, root)
 %doc AUTHORS COPYING
-%{_libdir}/lib*.so.*
+%{_libdir}/libgnomeuimm-%{api_version}.so.%{major}*
 
-%files -n %{libname}-devel
+%files -n %develname
 %defattr(-, root, root)
 %doc COPYING ChangeLog TODO
 %{_includedir}/*
