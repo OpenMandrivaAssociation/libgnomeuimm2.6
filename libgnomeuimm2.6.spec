@@ -21,7 +21,6 @@ Release:	%{release}
 License:	LGPL
 Group:		System/Libraries
 URL:		http://gtkmm.sourceforge.net/
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Source:		http://ftp.gnome.org/pub/GNOME/sources/%{pkgname}/%{pkgname}-%{version}.tar.bz2
 BuildRequires:	libgnomeui2-devel >= 2.7.1
 BuildRequires:	gnome-vfsmm2.6-devel >= %{gnomevfsmm_version}
