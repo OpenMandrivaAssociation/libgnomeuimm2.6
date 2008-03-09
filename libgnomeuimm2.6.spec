@@ -1,4 +1,4 @@
-%define version 2.20.2
+%define version 2.22.0
 %define release %mkrel 1
 
 %define libgnomemm_version 2.14.0
