@@ -1,5 +1,5 @@
-%define version 2.22.0
-%define release %mkrel 2
+%define version 2.24.0
+%define release %mkrel 1
 
 %define libgnomemm_version 2.14.0
 %define libgnomecanvasmm_version 2.6.0
@@ -18,7 +18,7 @@ Summary:	A C++ wrapper for GNOME UI library
 Name:		%{pkgname}%{api_version}
 Version:	%{version}
 Release:	%{release}
-License:	LGPL
+License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://gtkmm.sourceforge.net/
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
