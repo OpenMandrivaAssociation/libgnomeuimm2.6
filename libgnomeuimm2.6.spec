@@ -1,12 +1,3 @@
-%define version 2.28.0
-%define release %mkrel 4
-
-%define libgnomemm_version 2.14.0
-%define libgnomecanvasmm_version 2.6.0
-%define gconfmm_version 2.6.0
-%define gnomevfsmm_version 2.6.0
-%define libglademm_version 2.4.0
-
 %define pkgname libgnomeuimm
 %define major 1
 %define api_version 2.6
@@ -16,20 +7,19 @@
 
 Summary:	A C++ wrapper for GNOME UI library
 Name:		%{pkgname}%{api_version}
-Version:	%{version}
-Release:	%{release}
+Version:	2.28.0
+Release:	6
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://gtkmm.sourceforge.net/
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Source:		http://ftp.gnome.org/pub/GNOME/sources/%{pkgname}/%{pkgname}-%{version}.tar.bz2
-BuildRequires:	libgnomeui2-devel >= 2.7.1
-BuildRequires:	gnome-vfsmm2.6-devel >= %{gnomevfsmm_version}
-BuildRequires:	gconfmm2.6-devel >= %{gconfmm_version}
-BuildRequires:	libgnomemm2.6-devel >= %{libgnomemm_version}
-BuildRequires:	libgnomecanvasmm2.6-devel >= %{libgnomecanvasmm_version}
-BuildRequires:	libglademm2.4-devel >= %{libglademm_version}
-BuildRequires:	libexpat-devel
+BuildRequires:	pkgconfig(libgnomeui-2.0)
+BuildRequires:	pkgconfig(gnome-vfsmm-2.6)
+BuildRequires:	pkgconfig(gconfmm-2.6)
+BuildRequires:	pkgconfig(libgnomemm-2.6)
+BuildRequires:	pkgconfig(libgnomecanvasmm-2.6)
+BuildRequires:	pkgconfig(libglademm-2.4)
+BuildRequires:	pkgconfig(expat)
 BuildRequires:	doxygen
 
 %description
@@ -50,13 +40,12 @@ It is a subpackage of the gnomemm project, which provides C++ binding
 of various GNOME libraries.
 
 
-%package	-n %develname
+%package	-n %{develname}
 Summary:	Development files for libgnomeui C++ wrapper
 Group:		Development/GNOME and GTK+
-Requires:	%{libname} = %{version}
+Requires:	%{libname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 Provides:	%{pkgname}-devel = %{version}-%{release}
-Obsoletes: %mklibname -d gnomeuimm %api_version 1
 
 %description	-n %develname
 This package contains all necessary files, including libraries and headers,
@@ -77,7 +66,7 @@ This package provides API documentation of %{pkgname} library.
 %setup -q -n %{pkgname}-%{version}
 
 %build
-%configure2_5x --enable-static
+%configure2_5x --disable-static
 %make
 
 ### Build doc
@@ -87,38 +76,135 @@ pushd docs/reference
 popd
 
 %install
-rm -rf %{buildroot}
 %makeinstall_std
-find %buildroot -name \*.la|xargs chmod 644
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
-%clean
-rm -rf %{buildroot}
-
 
 %files -n %{libname}
-%defattr(-, root, root)
 %doc AUTHORS COPYING
 %{_libdir}/libgnomeuimm-%{api_version}.so.%{major}*
 
-%files -n %develname
-%defattr(-, root, root)
+%files -n %{develname}
 %doc COPYING ChangeLog TODO
 %{_includedir}/*
-%{_libdir}/lib*.a
-%{_libdir}/lib*.la
 %{_libdir}/lib*.so
 %{_libdir}/pkgconfig/*.pc
 %{_libdir}/%{pkgname}-%{api_version}
 
 %files doc
-%defattr(-, root, root)
 %doc docs/reference/html 
 
+%changelog
+* Mon May 02 2011 Oden Eriksson <oeriksson@mandriva.com> 2.28.0-4mdv2011.0
++ Revision: 661470
+- mass rebuild
+
+* Sun Nov 28 2010 Oden Eriksson <oeriksson@mandriva.com> 2.28.0-3mdv2011.0
++ Revision: 602556
+- rebuild
+
+* Tue Mar 16 2010 Oden Eriksson <oeriksson@mandriva.com> 2.28.0-2mdv2010.1
++ Revision: 520863
+- rebuilt for 2010.1
+
+* Mon Sep 21 2009 GÃ¶tz Waschk <waschk@mandriva.org> 2.28.0-1mdv2010.0
++ Revision: 446587
+- update to new version 2.28.0
+
+* Wed Sep 02 2009 Christophe Fergeau <cfergeau@mandriva.com> 2.26.0-2mdv2010.0
++ Revision: 425561
+- rebuild
+
+* Mon Mar 16 2009 GÃ¶tz Waschk <waschk@mandriva.org> 2.26.0-1mdv2009.1
++ Revision: 355981
+- update to new version 2.26.0
+
+* Mon Sep 22 2008 GÃ¶tz Waschk <waschk@mandriva.org> 2.24.0-1mdv2009.0
++ Revision: 286532
+- new version
+- update license
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - rebuild
+
+  + Pixel <pixel@mandriva.com>
+    - do not call ldconfig in %%post/%%postun, it is now handled by filetriggers
+
+* Sun Mar 09 2008 GÃ¶tz Waschk <waschk@mandriva.org> 2.22.0-1mdv2008.1
++ Revision: 182993
+- new version
+
+* Sun Feb 10 2008 GÃ¶tz Waschk <waschk@mandriva.org> 2.20.2-1mdv2008.1
++ Revision: 164909
+- new version
+
+* Mon Jan 28 2008 GÃ¶tz Waschk <waschk@mandriva.org> 2.20.1-1mdv2008.1
++ Revision: 159486
+- new version
+
+* Sun Jan 13 2008 Thierry Vignaud <tv@mandriva.org> 2.20.0-2mdv2008.1
++ Revision: 150650
+- rebuild
+- kill re-definition of %%buildroot on Pixel's request
+
+  + Olivier Blin <oblin@mandriva.com>
+    - restore BuildRoot
+
+* Fri Sep 14 2007 GÃ¶tz Waschk <waschk@mandriva.org> 2.20.0-1mdv2008.0
++ Revision: 85544
+- new version
+- new devel name
+- bump deps
+
+
+* Sat Mar 10 2007 GÃ¶tz Waschk <waschk@mandriva.org> 2.18.0-1mdv2007.1
++ Revision: 140352
+- new version
+
+* Tue Jan 02 2007 GÃ¶tz Waschk <waschk@mandriva.org> 2.16.0-2mdv2007.1
++ Revision: 103079
+- Import libgnomeuimm2.6
+
+* Tue Jan 02 2007 GÃ¶tz Waschk <waschk@mandriva.org> 2.16.0-2mdv2007.1
+- Rebuild
+
+* Wed Aug 23 2006 Götz Waschk <waschk@mandriva.org> 2.16.0-1mdv2007.0
+- New release 2.16.0
+
+* Tue Aug 08 2006 Götz Waschk <waschk@mandriva.org> 2.14.0-3mdv2007.0
+- fix buildrequires
+
+* Wed Aug 02 2006 Frederic Crozat <fcrozat@mandriva.com> 2.14.0-2mdv2007.0
+- Rebuild with latest dbus
+
+* Tue Apr 11 2006 GÃ¶tz Waschk <waschk@mandriva.org> 2.14.0-1mdk
+- New release 2.14.0
+- use mkrel
+
+* Sun Oct 09 2005 GÃ¶tz Waschk <waschk@mandriva.org> 2.12.0-1mdk
+- New release 2.12.0
+
+* Tue May 10 2005 Götz Waschk <waschk@mandriva.org> 2.10.0-2mdk
+- fix devel provides
+
+* Mon Mar 07 2005 Götz Waschk <waschk@linux-mandrake.com> 2.10.0-1mdk
+- source URL
+- New release 2.10.0
+
+* Thu Jan 06 2005 Frederic Crozat <fcrozat@mandrakesoft.com> 2.8.0-2mdk 
+- Rebuild with latest howl
+
+* Wed Nov 10 2004 Götz Waschk <waschk@linux-mandrake.com> 2.8.0-1mdk
+- requires new libgnomeui
+- fix source URL
+- New release 2.8.0
+
+* Tue Jul 06 2004 Abel Cheung <deaddog@deaddog.org> 2.6.0-2mdk
+- Rebuild with new g++
+- Reenable libtoolize
+
+* Fri Apr 30 2004 Abel Cheung <deaddog@deaddog.org> 2.6.0-1mdk
+- New major release
+
+* Fri Apr 30 2004 Abel Cheung <deaddog@deaddog.org> 2.0.0-3mdk
+- Rebuild
+- Split documentation
 
