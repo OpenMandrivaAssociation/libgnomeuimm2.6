@@ -9,7 +9,7 @@
 Summary:	A C++ wrapper for GNOME UI library
 Name:		%{pkgname}%{api}
 Version:	2.28.0
-Release:	10
+Release:	11
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://gtkmm.sourceforge.net/
