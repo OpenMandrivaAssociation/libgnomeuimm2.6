@@ -63,6 +63,7 @@ This package provides API documentation of %{pkgname} library.
 %setup -qn %{pkgname}-%{version}
 
 %build
+export CXX=g++
 export CC=gcc
 %configure
 %make
