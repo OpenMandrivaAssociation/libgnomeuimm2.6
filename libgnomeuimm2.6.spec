@@ -65,7 +65,7 @@ This package provides API documentation of %{pkgname} library.
 %build
 export CXX=g++
 export CC=gcc
-%configure
+%configure --enable-compile-warnings=no
 %make
 
 ### Build doc
