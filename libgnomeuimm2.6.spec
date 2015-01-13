@@ -63,7 +63,8 @@ This package provides API documentation of %{pkgname} library.
 %setup -qn %{pkgname}-%{version}
 
 %build
-%configure2_5x --disable-static
+export CC=gcc
+%configure
 %make
 
 ### Build doc
