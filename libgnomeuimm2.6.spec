@@ -15,6 +15,11 @@ Group:		System/Libraries
 Url:		https://gtkmm.sourceforge.net/
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/libgnomeuimm/%{url_ver}/%{pkgname}-%{version}.tar.bz2
 
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	doxygen
 BuildRequires:	pkgconfig(expat)
 BuildRequires:	pkgconfig(gconfmm-2.6)
